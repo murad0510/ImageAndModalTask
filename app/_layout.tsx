@@ -32,7 +32,7 @@ export default function RootLayout() {
   return (
     <SafeAreaView>
       {/* <Profile/> */}
-      {/* <ProfileInBigProduc/> */}
+      <ProfileInBigProduc/>
     </SafeAreaView>
   );
 }

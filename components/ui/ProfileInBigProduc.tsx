@@ -1,5 +1,5 @@
-import React from 'react'
-import { View ,Text, StyleSheet,Image, FlatList} from 'react-native'
+import React, { useState } from 'react'
+import { View ,Text, StyleSheet,Image, FlatList, Button, Modal, Pressable} from 'react-native'
 import SingleProfileInProduct from './SingleProfileInProduct';
 import SingleProfileInBigProduct from './SingleProfileInBigProduct';
 // import {Image} from "expo-image"
@@ -85,6 +85,12 @@ const products=[
 ];
 
 const Profile = () => {
+  const [visibleModal,setVisibleModal]=useState<boolean>(false);
+
+  const handlerShowModal=()=>{
+    setVisibleModal((prev)=>!prev);
+  }
+
   return (
     <View style={{flex:1}}>
         <View style={styles.headerView}>
@@ -92,7 +98,9 @@ const Profile = () => {
               <Text style={styles.settingText}>Settings</Text>
               <Text style={styles.profileText}>Profile</Text>
               <Text style={styles.settingText}>Logout</Text>
-
+            </View>
+            <View>
+              <Button onPress={handlerShowModal} title='Show Modal'></Button>
             </View>
             <View style={styles.userPhotoView}>
                 <Image style={styles.image} resizeMode='cover' source={{ uri: "https://www.noupe.com/wp-content/uploads/2020/08/Screen-Shot-2020-08-21-at-15.17.10-953x1024.png" }}/>
@@ -105,11 +113,11 @@ const Profile = () => {
 
             <View style={styles.container}>
                <View style={styles.tabContainer}>
-                 <View style={[styles.tab, styles.activeTab]}>
-                   <Text style={[styles.tabText, styles.activeTabText]}>Posts</Text>
+                 <View style={[styles.tab]}>
+                   <Text style={[styles.tabText]}>Posts</Text>
                  </View>
-                 <View style={styles.tab}>
-                   <Text style={styles.tabText}>Photos</Text>
+                 <View style={[styles.tab, styles.activeTab]}>
+                   <Text style={[styles.tabText,styles.activeTabText]}>Photos</Text>
                  </View>
                </View>
             </View>
@@ -120,12 +128,34 @@ const Profile = () => {
                 </View>
             </View>
         </View>
+        <Modal visible={visibleModal}>
+          <View style={styles.modalBackground}>
+            <View style={styles.centeredContainer}>
+              <View style={styles.box}>
+                <View style={styles.centerViewInModal}>
+                  <Text style={styles.rateOurAppText}>Rate our app</Text>
+                  <Text style={styles.description}>
+                    Consequat velit qui adipisicing sunt do reprehenderit ad laborum tempor ullamco exercitation. Ullamco tempor adipisicing et voluptate duis sit esse aliqua esse ex dolore esse. Consequat velit qui adipisicing sunt.
+                  </Text>
 
+                  <Pressable onPress={handlerShowModal} style={styles.customButton}>
+                    <Text style={styles.customButtonText}>Close</Text>
+                  </Pressable>
+                </View>
+              </View>
+            </View>
+          </View>
+        </Modal>
     </View>
   )
 }
 
 const styles=StyleSheet.create({
+    customButton:{borderRadius:100,backgroundColor:"#5DB075",width:"100%"},
+    customButtonText:{color:"white",fontSize:16,fontWeight:"600",lineHeight:19,textAlign:"center"},
+    centerViewInModal:{width:"80%",marginHorizontal:35,marginTop:96},
+    rateOurAppText:{fontSize:30,fontWeight:"600",textAlign:"center",lineHeight:36,marginBottom:16},
+    description:{fontSize:16,marginBottom:45,lineHeight:19,fontWeight:"500",color:"#666666"},
     userNameAndGoesHereText:{marginTop:200,marginBottom:50},
     userNameText:{textAlign:"center",fontSize:30,fontWeight:"600",lineHeight:36,color:"black",marginBottom:8},
     userGoesHereText:{textAlign:"center",color:"black",lineHeight:19,fontSize:16,fontWeight:600},
@@ -163,6 +193,24 @@ const styles=StyleSheet.create({
       },
       activeTabText: {
         color: '#5DB075',
+      },
+      modalBackground: {
+        backgroundColor: '#5DB075',
+        flex: 1,
+      },
+      centeredContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      box: {
+        backgroundColor: 'white',
+        borderRadius: 8,
+        width:"80%",
+        height: "45%",
+
+        // width: 343,
+        // height: 427,
       },
 })
 
